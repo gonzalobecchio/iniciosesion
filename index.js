@@ -1,3 +1,6 @@
+// https://github.com/gonzalobecchio/iniciosesion 
+
+require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const passport = require('passport')
@@ -5,11 +8,20 @@ const mongoose = require('mongoose')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 const { engine } = require('express-handlebars')
+const { Router } = express
+
+const { fork } = require('child_process')
 
 
-mongoose.connect("mongodb+srv://admin:admin@cluster0.3ae1xgp.mongodb.net/?retryWrites=true&w=majority")
+const testAsync =  Router()
 
-const PORT = 8000
+const options = {default: {port: 8080}, alias: {p: 'port'}}
+// const args = require('minimist')(process.argv.slice(2), options)
+const args = require('minimist')(process.argv.slice(2))
+
+mongoose.connect(process.env.MONGO_URI)
+
+// const PORT = 3000
 
 const User = mongoose.model('User', new mongoose.Schema({
     email: {
@@ -39,7 +51,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(`${__dirname}/public`))
 
 app.use(session({
-    secret : 'my-secret',
+    secret : process.env.MY_SECRET,
     cookie: {
         httpOnly: false,
         secure: false,
@@ -59,16 +71,16 @@ passport.use('login', new LocalStrategy({
 },
 async (email, password, done) => {
     const userFound = await User.findOne({email}).exec()
-
-    console.log(userFound)
+    
+    // console.log(userFound)
     if (!userFound) {
         console.log(`User not found ${email}`)
         return done(null, false)
     }
     
     const isMatch = await bcrypt.compare(password, userFound.password)
-    console.log(isMatch)
-
+    // console.log(isMatch)
+    
     if (!isMatch) {
         console.log('Invalid Password!')
         return done(null, false)
@@ -87,16 +99,16 @@ passport.use('register', new LocalStrategy({
         done(null, false)
     }
     const userFound = await User.findOne({email}).exec()
-    console.log(userFound)
+    // console.log(userFound)
     if (userFound) {
         console.log(`Usuario ${userFound.email} already exists`)
         return done(null, false)
     }
-
+    
     try {
         const salt = await bcrypt.genSalt()
 		const hash = await bcrypt.hash(password, salt)
-
+        
         const newUser = new User({email, password: hash})
         newUser.save()
         console.log('User created succeful')
@@ -117,13 +129,13 @@ passport.deserializeUser(async function (_id, done) {
 });
 
 app.get('/' , (req, res) => {
-    console.log(req)
+    // console.log(req)
     if (!req.isAuthenticated()) {
         res.render('login')
         return
     }
     const user = req.user
-    console.log(user)
+    // console.log(user)
     res.render('profile', {
         'user': [
             user.email
@@ -136,11 +148,11 @@ app.get('/register' , (req, res) => {
         res.render('register')
         return
     }
-
+    
     const user = req.user
     res.render('profile', {
         'user': [
-             user.email
+            user.email
         ]  
     })
 
@@ -150,7 +162,7 @@ app.post('/login', passport.authenticate('login', {failureRedirect: '/failedAuth
     const user = req.user
     res.render('profile', {
         'user': [
-             user.email
+            user.email
         ]  
     })
 })
@@ -173,12 +185,12 @@ app.get('/profile', (req, res) => {
         res.render('login')
         return
     }
-
-    console.log(req.user)
+    
+    // console.log(req.user)
     const user = req.user
     res.render('profile', {
         'user': [
-             user.email
+            user.email
         ]  
     })
 })
@@ -192,5 +204,38 @@ app.get('/failedAuth', (req, res) => {
     res.render('failedAuth')
 })
 
+app.get('/info', (req, res) => {
+    const p =  args.p 
+    res.send({
+        argInput : { p },
+        SO : process.platform,
+        vNode: process.version,
+        rss: process.memoryUsage,
+        pathExc: process.execPath,
+        pID: process.pid,
+        directory: process.cwd()
+        
+    })
+})
 
-app.listen(PORT, () => { console.log(`Corriendo en Puerto ${PORT}`)})
+
+testAsync.get('/randoms', (req, res) => {
+    let { cant } = req.query 
+    if (!cant) {
+        cant = 100000000
+    }
+    
+    const forked = fork('./child.js')
+    
+    forked.send(cant)
+    
+    forked.on('message', unicos => {
+        console.log(unicos)
+        res.send(unicos)
+    })
+})
+
+app.use('/api', testAsync)
+
+
+app.listen(args.p, () => { console.log(`Corriendo en Puerto ${args.p}`)})
