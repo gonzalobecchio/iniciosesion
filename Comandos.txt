@@ -1,0 +1,53 @@
+
+NODE
+
+node index.js --> FORK
+    procesos: 26336
+              38644
+node index.js -p 8081 --modo cluster --> CLUSTER
+
+
+NODEMON
+    nodemon index.js --> FORK
+        procesos:   35916
+                    38856
+                    27748
+    nodemon index.js -p 8081 --modo cluster
+
+FOREVER
+    forever index.js --> FORK -w
+    forever index.js -p 8081 --modo cluster -w
+
+    forever stop <PID>
+
+PM2
+    pm2 start index.js --name "PORT 8081" --watch  --> FORK
+    pm2 start index.js --name="PORT 8082" --watch -- -p 8082 --modo cluster  --> CLUSTER
+
+    pm2 stop // delete
+
+ 
+ 
+ Con NGNIX
+    *Resto de las consultas dirigidas a Puerto 8080
+    pm2 start index.js --name="PORT 8080" --watch 
+    
+    *Redirigir todas las consultas hacia '/api/randoms en Puerto 8081
+    pm2 start index.js --name="PORT 8081" --watch -- -p 8081 --modo cluster  --> CLUSTER
+
+    *Todas las consultas a /api/randoms redirigidas a cluster de servidores, repartiendo entre 4 instancias entre los puertos 8082,8083,8084,8085
+    pm2 start index.js --name="PORT 8082" --watch -- -p 8082 --modo cluster  --> CLUSTER
+    pm2 start index.js --name="PORT 8083" --watch -- -p 8083 --modo cluster  --> CLUSTER
+    pm2 start index.js --name="PORT 8084" --watch -- -p 8084 --modo cluster  --> CLUSTER
+    pm2 start index.js --name="PORT 8085" --watch -- -p 8085 --modo cluster  --> CLUSTER
+
+
+
+
+    
+
+
+
+
+
+
