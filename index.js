@@ -15,6 +15,14 @@ const { fork } = require('child_process')
 const cluster = require('cluster')
 const numCPUs = require('os').cpus().length
 
+const compression = require('compression')
+
+/*******************************************Logs *******************************************/
+const pino = require('pino')
+const loggeFileWarn = pino({level: 'warn'}, pino.destination(`${__dirname}/warn.log`))
+const loggeFileError = pino({level: 'error'}, pino.destination(`${__dirname}/error.log`))
+const loggerConsole = pino({level: 'info'})
+/*******************************************Logs *******************************************/
 
 const testAsync = Router()
 
@@ -134,6 +142,8 @@ passport.deserializeUser(async function (_id, done) {
 });
 
 app.get('/', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
+    
     if (!req.isAuthenticated()) {
         res.render('login', {'port': PORT, 'pid': process.pid})
         return
@@ -148,21 +158,23 @@ app.get('/', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     if (!req.isAuthenticated()) {
         res.render('register')
         return
     }
-
+    
     const user = req.user
     res.render('profile', {
         'user': [
             user.email
         ]
     })
-
+    
 })
 
 app.post('/login', passport.authenticate('login', { failureRedirect: '/failedAuth' }), (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     const user = req.user
     res.render('profile', {
         'user': [
@@ -172,11 +184,13 @@ app.post('/login', passport.authenticate('login', { failureRedirect: '/failedAut
 })
 
 app.post('/register', passport.authenticate('register', { failureRedirect: '/failRegister' }), (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     console.log('Register ok')
     res.render('login')
 })
 
 app.get('/logout', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     req.logout((err) => {
         if (err) { return next(err); }
         console.log('Logout Success')
@@ -185,6 +199,7 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     if (!req.isAuthenticated()) {
         res.render('login')
         return
@@ -201,17 +216,23 @@ app.get('/profile', (req, res) => {
 
 
 app.get('/failRegister', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     res.render('failedRegister')
 })
 
 app.get('/failedAuth', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     res.render('failedAuth')
 })
 
-app.get('/info', (req, res) => {
+function hola() {
+    console.log('Holaaaaaa')
+}
+
+app.get('/info', compression(), (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     const p = args.p
-    console.log(PORT)
-    res.send({
+    const info = {
         argInput: { p },
         SO: process.platform,
         vNode: process.version,
@@ -220,17 +241,21 @@ app.get('/info', (req, res) => {
         pID: process.pid,
         directory: process.cwd(),
         procesadores: numCPUs,
-    })
+    }
+    // console.log(info)
+    res.send(info)
 })
 
 
 testAsync.get('/randoms', (req, res) => {
+    loggerConsole.info('METHOD: %s - URL: %s' , req.method, req.originalUrl)
     let { cant } = req.query
     if (!cant) {
         cant = 100000000
     }
 
-    const forked = fork('./child.js')
+    //Desactivado por consigna
+    // const forked = fork('./child.js')
 
     forked.send(cant)
 
@@ -244,8 +269,13 @@ testAsync.get('/randoms', (req, res) => {
 
 app.use('/api', testAsync)
 
-// console.log(MODO)
-// console.log(PORT)
+app.get('*', (req, res) => {
+    loggeFileWarn.warn({message: `Recurso Inexistente`}, 'METHOD: %s - URL: %s' , req.method, req.originalUrl)
+    loggerConsole.warn({message: `Recurso Inexistente`}, 'METHOD: %s - URL: %s' , req.method, req.originalUrl)
+    
+    console.log(req.originalUrl)
+    res.send(`Recurso inexistente ${req.method} ${req.originalUrl}`)
+})
 
 if (MODO == 'cluster') {
 

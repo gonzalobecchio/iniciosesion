@@ -1,0 +1,172 @@
+Statistical profiling result from bloqueante-v8.log, (7325 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   6959   95.0%          C:\WINDOWS\SYSTEM32\ntdll.dll
+    353    4.8%          C:\Program Files\nodejs\node.exe
+      1    0.0%          C:\WINDOWS\system32\mswsock.dll
+      1    0.0%          C:\WINDOWS\System32\WS2_32.dll
+      1    0.0%          C:\WINDOWS\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      2    0.0%   20.0%  LazyCompile: *resolve path.js:153:10
+      1    0.0%   10.0%  RegExp: ^[a-zA-Z_][a-zA-Z_0-9]*$
+      1    0.0%   10.0%  RegExp: ; *([!#$%&'*+.^_`|~0-9A-Za-z-]+) *= *("(?:[\u000b\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u000b\u0020-\u00ff])*"|[!#$%&'*+.^_`|~0-9A-Za-z-]+) *
+      1    0.0%   10.0%  LazyCompile: *toNamespacedPath path.js:609:19
+      1    0.0%   10.0%  LazyCompile: *formatRaw internal/util/inspect.js:777:19
+      1    0.0%   10.0%  LazyCompile: *formatProperty internal/util/inspect.js:1651:24
+      1    0.0%   10.0%  LazyCompile: *emit events.js:349:44
+      1    0.0%   10.0%  LazyCompile: *_storeHeader _http_outgoing.js:362:22
+      1    0.0%   10.0%  LazyCompile: *Readable.read internal/streams/readable.js:374:35
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     10    0.1%  100.0%  JavaScript
+      0    0.0%    0.0%  C++
+     13    0.2%  130.0%  GC
+   7315   99.9%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   6959   95.0%  C:\WINDOWS\SYSTEM32\ntdll.dll
+
+    353    4.8%  C:\Program Files\nodejs\node.exe
+    219   62.0%    C:\Program Files\nodejs\node.exe
+     69   31.5%      LazyCompile: ~handleWriteReq internal/stream_base_commons.js:47:24
+     69  100.0%        LazyCompile: ~writeGeneric internal/stream_base_commons.js:143:22
+     37   53.6%          LazyCompile: ~Socket._writeGeneric net.js:772:42
+     37  100.0%            LazyCompile: ~Socket._write net.js:809:35
+     20   29.0%          LazyCompile: *Writable.write internal/streams/writable.js:258:36
+     20  100.0%            LazyCompile: ~value internal/console/constructor.js:262:20
+     12   17.4%          LazyCompile: *writeOrBuffer internal/streams/writable.js:334:23
+     12  100.0%            LazyCompile: ~Writable.write internal/streams/writable.js:258:36
+     16    7.3%      LazyCompile: ~wrapSafe internal/modules/cjs/loader.js:986:18
+     16  100.0%        LazyCompile: ~Module._compile internal/modules/cjs/loader.js:1039:37
+     16  100.0%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:1094:37
+     16  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:938:33
+     14    6.4%      C:\Program Files\nodejs\node.exe
+      5   35.7%        LazyCompile: *reduceToSingleString internal/util/inspect.js:1738:30
+      5  100.0%          LazyCompile: *formatRaw internal/util/inspect.js:777:19
+      5  100.0%            LazyCompile: *formatValue internal/util/inspect.js:708:21
+      2   14.3%        LazyCompile: ~entitytag C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\etag\index.js:39:20
+      2  100.0%          LazyCompile: ~etag C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\etag\index.js:70:15
+      1   50.0%            LazyCompile: ~generateETag C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\utils.js:273:32
+      1   50.0%            LazyCompile: *send C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\response.js:111:25
+      1    7.1%        LazyCompile: ~toNamespacedPath path.js:609:19
+      1  100.0%          LazyCompile: ~stat internal/modules/cjs/loader.js:146:14
+      1  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:462:28
+      1    7.1%        LazyCompile: ~removeColors internal/util.js:70:22
+      1  100.0%          LazyCompile: ~isBelowBreakLength internal/util/inspect.js:1714:28
+      1  100.0%            LazyCompile: ~reduceToSingleString internal/util/inspect.js:1738:30
+      1    7.1%        LazyCompile: ~join path.js:416:7
+      1  100.0%          LazyCompile: ~pipe C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\send\index.js:506:43
+      1  100.0%            LazyCompile: ~serveStatic C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\serve-static\index.js:72:31
+      1    7.1%        LazyCompile: ~getOwn internal/bootstrap/loaders.js:154:16
+      1  100.0%          LazyCompile: ~syncExports internal/bootstrap/loaders.js:261:14
+      1  100.0%            LazyCompile: ~<anonymous> internal/bootstrap/loaders.js:247:15
+      1    7.1%        LazyCompile: ~expressInit C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\middleware\init.js:29:30
+      1  100.0%          LazyCompile: *trim_prefix C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:293:23
+      1  100.0%            LazyCompile: *next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:177:16
+      1    7.1%        LazyCompile: ~FastBuffer internal/buffer.js:957:14
+      1  100.0%          LazyCompile: ~createUnsafeBuffer buffer.js:153:28
+      1  100.0%            LazyCompile: ~createPool buffer.js:162:20
+      1    7.1%        LazyCompile: *formatRaw internal/util/inspect.js:777:19
+      1  100.0%          LazyCompile: ~formatValue internal/util/inspect.js:708:21
+      1  100.0%            LazyCompile: ~inspect internal/util/inspect.js:265:17
+      6    2.7%      LazyCompile: ~stat internal/modules/cjs/loader.js:146:14
+      4   66.7%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:352:17
+      4  100.0%          LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:368:23
+      4  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:462:28
+      2   33.3%        LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:462:28
+      2  100.0%          LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:816:35
+      2  100.0%            LazyCompile: ~Module._load internal/modules/cjs/loader.js:725:24
+      6    2.7%      LazyCompile: ~randomBytes internal/crypto/random.js:65:21
+      6  100.0%        LazyCompile: ~randomBytesSync C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\random-bytes\index.js:72:25
+      6  100.0%          LazyCompile: ~uidSync C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\uid-safe\index.js:75:18
+      6  100.0%            LazyCompile: ~generateSessionId C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express-session\index.js:518:27
+      5    2.3%      LazyCompile: ~writevGeneric internal/stream_base_commons.js:118:23
+      5  100.0%        LazyCompile: ~Socket._writeGeneric net.js:772:42
+      5  100.0%          LazyCompile: ~Socket._writev net.js:804:36
+      5  100.0%            LazyCompile: ~doWrite internal/streams/writable.js:367:17
+      5    2.3%      LazyCompile: ~realpathSync fs.js:1723:22
+      5  100.0%        LazyCompile: ~toRealPath internal/modules/cjs/loader.js:361:20
+      4   80.0%          LazyCompile: ~tryFile internal/modules/cjs/loader.js:352:17
+      2   50.0%            LazyCompile: *Module._findPath internal/modules/cjs/loader.js:462:28
+      1   25.0%            LazyCompile: ~tryPackage internal/modules/cjs/loader.js:306:20
+      1   25.0%            LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:368:23
+      1   20.0%          LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:462:28
+      1  100.0%            LazyCompile: ~Module._resolveFilename internal/modules/cjs/loader.js:816:35
+      4    1.8%      LazyCompile: ~initialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\passport\lib\middleware\initialize.js:51:29
+      2   50.0%        LazyCompile: *trim_prefix C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:293:23
+      2  100.0%          LazyCompile: *next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:177:16
+      2  100.0%            LazyCompile: *session C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express-session\index.js:179:26
+      1   25.0%        LazyCompile: ~handle C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\layer.js:86:49
+      1  100.0%          LazyCompile: ~trim_prefix C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:293:23
+      1  100.0%            LazyCompile: *next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:177:16
+      1   25.0%        LazyCompile: *handle C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\layer.js:86:49
+      1  100.0%          LazyCompile: ~trim_prefix C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:293:23
+      1  100.0%            LazyCompile: *next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:177:16
+      4    1.8%      LazyCompile: ~deserializeObject C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\parser\deserializer.js:65:27
+      2   50.0%        LazyCompile: ~deserializeObject C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\parser\deserializer.js:65:27
+      2  100.0%          LazyCompile: ~deserialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\parser\deserializer.js:36:21
+      2  100.0%            LazyCompile: ~deserialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\bson.js:161:21
+      2   50.0%        LazyCompile: ~deserialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\parser\deserializer.js:36:21
+      2  100.0%          LazyCompile: ~deserialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\bson\lib\bson.js:161:21
+      2  100.0%            LazyCompile: ~parse C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\mongodb\lib\cmap\commands.js:426:10
+      4    1.8%      LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:273:27
+      3   75.0%        LazyCompile: ~nativeModuleRequire internal/bootstrap/loaders.js:306:29
+      1   33.3%          LazyCompile: ~setupPrepareStackTrace internal/bootstrap/node.js:254:32
+      1  100.0%            Eval: ~<anonymous> internal/bootstrap/node.js:1:1
+      1   33.3%          Eval: ~<anonymous> internal/console/global.js:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:273:27
+      1   33.3%          Eval: ~<anonymous> http2.js:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:273:27
+      1   25.0%        LazyCompile: ~compileForPublicLoader internal/bootstrap/loaders.js:220:25
+      1  100.0%          LazyCompile: ~loadNativeModule internal/modules/cjs/helpers.js:43:26
+      1  100.0%            LazyCompile: ~Module._load internal/modules/cjs/loader.js:725:24
+      4    1.8%      LazyCompile: *next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:177:16
+      2   50.0%        LazyCompile: ~strategy.pass C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\passport\lib\middleware\authenticate.js:345:31
+      2  100.0%          LazyCompile: ~SessionStrategy.authenticate C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\passport\lib\strategies\session.js:45:50
+      2  100.0%            LazyCompile: ~attempt C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\passport\lib\middleware\authenticate.js:180:22
+      1   25.0%        LazyCompile: ~initialize C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\passport\lib\middleware\initialize.js:51:29
+      1  100.0%          LazyCompile: *handle C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\layer.js:86:49
+      1  100.0%            LazyCompile: ~trim_prefix C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\index.js:293:23
+      1   25.0%        LazyCompile: ~error C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\serve-static\index.js:115:39
+      1  100.0%          LazyCompile: *emit events.js:349:44
+      1  100.0%            LazyCompile: ~error C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\send\index.js:267:45
+      3    1.4%      LazyCompile: ~stringify C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\response.js:1145:20
+      3  100.0%        LazyCompile: ~json C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\response.js:250:25
+      2   66.7%          LazyCompile: *send C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\response.js:111:25
+      2  100.0%            LazyCompile: ~<anonymous> C:\workspace\Coderhouse\Entregas\inicioSesion\index.js:228:33
+      1   33.3%          LazyCompile: ~send C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\response.js:111:25
+      1  100.0%            LazyCompile: ~<anonymous> C:\workspace\Coderhouse\Entregas\inicioSesion\index.js:228:33
+      3    1.4%      LazyCompile: ~_dump _http_incoming.js:297:49
+      3  100.0%        LazyCompile: ~resOnFinish _http_server.js:764:21
+      2   66.7%          LazyCompile: *emit events.js:349:44
+      2  100.0%            LazyCompile: ~onFinish _http_outgoing.js:790:18
+      1   33.3%          LazyCompile: ~emit events.js:349:44
+      1  100.0%            LazyCompile: ~onFinish _http_outgoing.js:790:18
+      3    1.4%      LazyCompile: ~Hash internal/crypto/hash.js:37:14
+      3  100.0%        LazyCompile: ~createHash crypto.js:113:20
+      3  100.0%          LazyCompile: ~hash C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express-session\index.js:596:14
+      2   66.7%            LazyCompile: ~isModified C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express-session\index.js:425:24
+      1   33.3%            LazyCompile: ~generate C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express-session\index.js:363:22
+      3    1.4%      LazyCompile: ~<anonymous> C:\workspace\Coderhouse\Entregas\inicioSesion\index.js:228:33
+      2   66.7%        LazyCompile: *handle C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\layer.js:86:49
+      2  100.0%          LazyCompile: ~next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\route.js:116:16
+      2  100.0%            LazyCompile: ~compression C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\compression\index.js:59:31
+      1   33.3%        LazyCompile: ~handle C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\layer.js:86:49
+      1  100.0%          LazyCompile: ~next C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\express\lib\router\route.js:116:16
+      1  100.0%            LazyCompile: ~compression C:\workspace\Coderhouse\Entregas\inicioSesion\node_modules\compression\index.js:59:31
+
