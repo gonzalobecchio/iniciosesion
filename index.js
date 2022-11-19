@@ -255,7 +255,7 @@ testAsync.get('/randoms', (req, res) => {
     }
 
     //Desactivado por consigna
-    // const forked = fork('./child.js')
+    const forked = fork('./child.js')
 
     forked.send(cant)
 
