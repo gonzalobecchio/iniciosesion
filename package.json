@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node benchmark.js",
+    "test": "echo error no especificado && exit 1",
     "start": "node index.js"
   },
   "keywords": [],
