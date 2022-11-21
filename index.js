@@ -294,7 +294,7 @@ if (MODO == 'cluster') {
         console.log(`Worker ${process.pid} started`)
     }
 } else {
-    app.listen(PORT, () => { console.log(`Corriendo en Puerto ${PORT}`) })
+    app.listen(PORT,'0.0.0.0' ,() => { console.log(`Corriendo en Puerto ${PORT}`) })
     console.log(`Process ${process.pid} started`)
     
 }
