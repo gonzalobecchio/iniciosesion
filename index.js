@@ -26,13 +26,12 @@ const loggerConsole = pino({level: 'info'})
 
 const testAsync = Router()
 
-const options = { default: { port: 8080, modo: 'fork' }, alias: { p: 'port', m: 'modo' } }
+const options = { default: { port: 8081, modo: 'fork' }, alias: { p: 'port', m: 'modo' } }
 const args = require('minimist')(process.argv.slice(2), options)
-// const args = require('minimist')(process.argv.slice(2))
 
 mongoose.connect(process.env.MONGO_URI)
 
-const PORT = args.port || 8080
+const PORT = args.port || 8081
 const MODO = args.modo
 
 
