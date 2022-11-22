@@ -31,7 +31,8 @@ const args = require('minimist')(process.argv.slice(2), options)
 
 mongoose.connect(process.env.MONGO_URI)
 
-const PORT = args.port || 8081
+// const PORT = args.port || 8081
+const PORT = process.env.PORT || 8081
 const MODO = args.modo
 
 
